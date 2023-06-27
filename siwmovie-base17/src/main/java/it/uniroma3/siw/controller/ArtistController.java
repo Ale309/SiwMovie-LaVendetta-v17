@@ -10,11 +10,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.model.Artist;
 import it.uniroma3.siw.repository.ArtistRepository;
+import it.uniroma3.siw.service.ArtistService;
 
 @Controller
 public class ArtistController {
 	
 	@Autowired 
+	private ArtistService artistService;
+	
+	@Autowired
 	private ArtistRepository artistRepository;
 
 	@GetMapping(value="/admin/formNewArtist")
@@ -30,11 +34,13 @@ public class ArtistController {
 	
 	@PostMapping("/admin/artist")
 	public String newArtist(@ModelAttribute("artist") Artist artist, Model model) {
-		if (!artistRepository.existsByNameAndSurname(artist.getName(), artist.getSurname())) {
-			this.artistRepository.save(artist); 
+			//artistvalidator here
+		if(artistService.createNewArtist(artist)) {
+			
 			model.addAttribute("artist", artist);
 			return "artist.html";
-		} else {
+		}
+		 else {
 			model.addAttribute("messaggioErrore", "Questo artista esiste già");
 			return "admin/formNewArtist.html"; 
 		}

@@ -18,14 +18,19 @@ import it.uniroma3.siw.controller.validator.MovieValidator;
 import it.uniroma3.siw.model.Artist;
 import it.uniroma3.siw.model.Movie;
 import it.uniroma3.siw.repository.ArtistRepository;
-import it.uniroma3.siw.repository.MovieRepository;
+import it.uniroma3.siw.service.ArtistService;
+import it.uniroma3.siw.service.MovieService;
 import jakarta.validation.Valid;
 
 @Controller
 public class MovieController {
-	@Autowired 
-	private MovieRepository movieRepository;
-	
+
+	@Autowired
+	private MovieService movieService;
+
+	@Autowired
+	private ArtistService artistService;
+
 	@Autowired 
 	private ArtistRepository artistRepository;
 
@@ -40,66 +45,83 @@ public class MovieController {
 
 	@GetMapping(value="/admin/formUpdateMovie/{id}")
 	public String formUpdateMovie(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("movie", movieRepository.findById(id).get());
+		Movie movie = movieService.findMovieById(id);
+		if(movie != null) {
+			model.addAttribute("movie", movieService.findMovieById(id));
+		}else {
+			return "movieError.html";
+		}
 		return "admin/formUpdateMovie.html";
+
 	}
 
 	@GetMapping(value="/admin/indexMovie")
 	public String indexMovie() {
 		return "admin/indexMovie.html";
 	}
-	
+
 	@GetMapping(value="/admin/manageMovies")
 	public String manageMovies(Model model) {
-		model.addAttribute("movies", this.movieRepository.findAll());
+		model.addAttribute("movies", this.movieService.findAllMovie());
 		return "admin/manageMovies.html";
 	}
-	
+
 	@GetMapping(value="/admin/setDirectorToMovie/{directorId}/{movieId}")
 	public String setDirectorToMovie(@PathVariable("directorId") Long directorId, @PathVariable("movieId") Long movieId, Model model) {
-		
-		Artist director = this.artistRepository.findById(directorId).get();
-		Movie movie = this.movieRepository.findById(movieId).get();
-		movie.setDirector(director);
-		this.movieRepository.save(movie);
-		
-		model.addAttribute("movie", movie);
-		return "admin/formUpdateMovie.html";
+		Movie movie = this.movieService.saveDirectorToMovie(movieId, directorId);
+		if(movie != null) {
+			model.addAttribute("movie", movie);
+			return "admin/formUpdateMovie.html";
+		}
+		else {
+			return "movieError.html";
+		}
 	}
-	
-	
+
+
 	@GetMapping(value="/admin/addDirector/{id}")
 	public String addDirector(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("artists", artistRepository.findAll());
-		model.addAttribute("movie", movieRepository.findById(id).get());
-		return "admin/directorsToAdd.html";
+		model.addAttribute("artists", artistService.findAllArtist());
+		Movie movie = movieService.findMovieById(id);
+		if(movie != null) {
+			model.addAttribute("movie", movie);
+			return "admin/directorsToAdd.html";
+		}else{
+			return "movieError.html";
+		}
 	}
 
 	@PostMapping("/admin/movie")
 	public String newMovie(@Valid @ModelAttribute("movie") Movie movie, BindingResult bindingResult, Model model) {
-		
+
 		this.movieValidator.validate(movie, bindingResult);
 		if (!bindingResult.hasErrors()) {
-			this.movieRepository.save(movie); 
+			this.movieService.createNewMovie(movie);
 			model.addAttribute("movie", movie);
 			return "movie.html";
 		} else {
-			return "admin/formNewMovie.html"; 
+			return "movieError.html";
 		}
 	}
 
 	@GetMapping("/movie/{id}")
 	public String getMovie(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("movie", this.movieRepository.findById(id).get());
-		return "movie.html";
+		Movie movie = this.movieService.findMovieById(id);
+		if(movie != null) {
+			model.addAttribute("movie", movie);
+			return "movie.html";
+
+		}else {
+			return "movieError.html";
+		}
 	}
 
 	@GetMapping("/movie")
 	public String getMovies(Model model) {		
-		model.addAttribute("movies", this.movieRepository.findAll());
+		model.addAttribute("movies", this.movieService.findAllMovie());
 		return "movies.html";
 	}
-	
+
 	@GetMapping("/formSearchMovies")
 	public String formSearchMovies() {
 		return "formSearchMovies.html";
@@ -107,58 +129,49 @@ public class MovieController {
 
 	@PostMapping("/searchMovies")
 	public String searchMovies(Model model, @RequestParam int year) {
-		model.addAttribute("movies", this.movieRepository.findByYear(year));
+		model.addAttribute("movies", this.movieService.findByYear(year));
 		return "foundMovies.html";
 	}
-	
+
 	@GetMapping("/admin/updateActors/{id}")
 	public String updateActors(@PathVariable("id") Long id, Model model) {
 
-		List<Artist> actorsToAdd = this.actorsToAdd(id);
+		List<Artist> actorsToAdd = this.artistService.findActorsNotInMovie(id);
 		model.addAttribute("actorsToAdd", actorsToAdd);
-		model.addAttribute("movie", this.movieRepository.findById(id).get());
+		Movie movie = this.movieService.findMovieById(id);
+		if(movie != null) {
+			model.addAttribute("movie", movie);
+			return "admin/actorsToAdd.html";
+		}else {
+			return "movieError.html";
+		}
 
-		return "admin/actorsToAdd.html";
 	}
 
 	@GetMapping(value="/admin/addActorToMovie/{actorId}/{movieId}")
 	public String addActorToMovie(@PathVariable("actorId") Long actorId, @PathVariable("movieId") Long movieId, Model model) {
-		Movie movie = this.movieRepository.findById(movieId).get();
-		Artist actor = this.artistRepository.findById(actorId).get();
-		Set<Artist> actors = movie.getActors();
-		actors.add(actor);
-		this.movieRepository.save(movie);
-		
-		List<Artist> actorsToAdd = actorsToAdd(movieId);
-		
-		model.addAttribute("movie", movie);
-		model.addAttribute("actorsToAdd", actorsToAdd);
-
-		return "admin/actorsToAdd.html";
+		Movie movie = this.movieService.saveActorToMovie(movieId, actorId);
+		if(movie != null) {
+			List<Artist> actorsToAdd = this.artistService.findActorsNotInMovie(movieId);
+			model.addAttribute("movie", movie);
+			model.addAttribute("actorsToAdd", actorsToAdd);
+			return "admin/actorsToAdd.html";
+		}else{
+			return "movieError.html";
+		}
 	}
-	
+
 	@GetMapping(value="/admin/removeActorFromMovie/{actorId}/{movieId}")
 	public String removeActorFromMovie(@PathVariable("actorId") Long actorId, @PathVariable("movieId") Long movieId, Model model) {
-		Movie movie = this.movieRepository.findById(movieId).get();
-		Artist actor = this.artistRepository.findById(actorId).get();
-		Set<Artist> actors = movie.getActors();
-		actors.remove(actor);
-		this.movieRepository.save(movie);
-
-		List<Artist> actorsToAdd = actorsToAdd(movieId);
-		
-		model.addAttribute("movie", movie);
-		model.addAttribute("actorsToAdd", actorsToAdd);
-
-		return "admin/actorsToAdd.html";
-	}
-
-	private List<Artist> actorsToAdd(Long movieId) {
-		List<Artist> actorsToAdd = new ArrayList<>();
-
-		for (Artist a : artistRepository.findActorsNotInMovie(movieId)) {
-			actorsToAdd.add(a);
+		Movie movie = this.movieService.deleteActorFromMovie(movieId, actorId);
+		if(movie != null) {
+			List<Artist> actorsToAdd = artistService.findActorsNotInMovie(movieId);
+			model.addAttribute("movie", movie);
+			model.addAttribute("actorsToAdd", actorsToAdd);
+			return "admin/actorsToAdd.html";
+		}else{
+			return "movieError.html";
 		}
-		return actorsToAdd;
 	}
+
 }
