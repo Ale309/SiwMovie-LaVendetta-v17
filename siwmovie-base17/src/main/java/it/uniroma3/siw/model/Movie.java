@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -36,6 +37,9 @@ public class Movie {
         
         @ManyToMany
         private Set<Artist> actors;
+        
+        @OneToMany
+        private Set<Review> reviews;
     
         public Long getId() {
             return id;
@@ -82,6 +86,14 @@ public class Movie {
     
         public void setActors(Set<Artist> actors) {
             this.actors = actors;
+        }
+        
+        public Set<Review> getReviews() {
+            return reviews;
+        }
+
+        public void setReviews(Set<Review> reviews) {
+            this.reviews = reviews;
         }
     
         @Override

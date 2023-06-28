@@ -39,9 +39,9 @@ public class MovieController {
 
 	@GetMapping(value="/admin/formUpdateMovie/{id}")
 	public String formUpdateMovie(@PathVariable("id") Long id, Model model) {
-		Movie movie = movieService.findMovieById(id);
+		Movie movie = movieService.findById(id);
 		if(movie != null) {
-			model.addAttribute("movie", movieService.findMovieById(id));
+			model.addAttribute("movie", movieService.findById(id));
 		}else {
 			return "movieError.html";
 		}
@@ -76,7 +76,7 @@ public class MovieController {
 	@GetMapping(value="/admin/addDirector/{id}")
 	public String addDirector(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("artists", artistService.findAllArtist());
-		Movie movie = movieService.findMovieById(id);
+		Movie movie = movieService.findById(id);
 		if(movie != null) {
 			model.addAttribute("movie", movie);
 			return "admin/directorsToAdd.html";
@@ -100,7 +100,7 @@ public class MovieController {
 
 	@GetMapping("/movie/{id}")
 	public String getMovie(@PathVariable("id") Long id, Model model) {
-		Movie movie = this.movieService.findMovieById(id);
+		Movie movie = this.movieService.findById(id);
 		if(movie != null) {
 			model.addAttribute("movie", movie);
 			return "movie.html";
@@ -111,7 +111,8 @@ public class MovieController {
 	}
 
 	@GetMapping("/movie")
-	public String getMovies(Model model) {		
+	public String getMovies(Model model) {
+		model.addAttribute("nummovies",movieService.count());
 		model.addAttribute("movies", this.movieService.findAllMovie());
 		return "movies.html";
 	}
@@ -132,7 +133,7 @@ public class MovieController {
 
 		List<Artist> actorsToAdd = this.artistService.findActorsNotInMovie(id);
 		model.addAttribute("actorsToAdd", actorsToAdd);
-		Movie movie = this.movieService.findMovieById(id);
+		Movie movie = this.movieService.findById(id);
 		if(movie != null) {
 			model.addAttribute("movie", movie);
 			return "admin/actorsToAdd.html";

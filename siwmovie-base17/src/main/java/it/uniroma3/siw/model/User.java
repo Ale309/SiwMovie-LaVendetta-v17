@@ -19,6 +19,8 @@ public class User {
 	@NotBlank
 	private String surname;
 	@NotBlank
+	private String username;
+	@NotBlank
 	private String email;
 
     public Long getId() {
@@ -42,6 +44,14 @@ public class User {
 	
 	public void setSurname(String surname) {
 		this.surname = surname;
+	}
+	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 	public String getEmail() {
