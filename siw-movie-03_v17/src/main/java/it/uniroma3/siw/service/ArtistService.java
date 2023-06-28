@@ -44,8 +44,7 @@ public class ArtistService {
 		return actorsToAdd;
 	}
 
-	public String findArtistById(Long id) {
-		this.artistRepository.findById(id).get();
-		return null;
+	public Artist findArtistById(Long id) {
+		return this.artistRepository.findById(id).get();
 	}
 }
