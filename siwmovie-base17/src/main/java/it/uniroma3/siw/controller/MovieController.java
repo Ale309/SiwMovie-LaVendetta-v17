@@ -1,8 +1,6 @@
 package it.uniroma3.siw.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import it.uniroma3.siw.controller.validator.MovieValidator;
 import it.uniroma3.siw.model.Artist;
 import it.uniroma3.siw.model.Movie;
-import it.uniroma3.siw.repository.ArtistRepository;
 import it.uniroma3.siw.service.ArtistService;
 import it.uniroma3.siw.service.MovieService;
 import jakarta.validation.Valid;
@@ -30,9 +27,6 @@ public class MovieController {
 
 	@Autowired
 	private ArtistService artistService;
-
-	@Autowired 
-	private ArtistRepository artistRepository;
 
 	@Autowired 
 	private MovieValidator movieValidator;

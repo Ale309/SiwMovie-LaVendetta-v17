@@ -33,6 +33,7 @@ public class ArtistService {
 	public Iterable<Artist> findAllArtist(){
 		return this.artistRepository.findAll();
 	}
+	
 
 	@Transactional
 	public List<Artist> findActorsNotInMovie(Long movieId) {
@@ -42,5 +43,10 @@ public class ArtistService {
 			actorsToAdd.add(a);
 		}
 		return actorsToAdd;
+	}
+
+	public String findArtistById(Long id) {
+		this.artistRepository.findById(id).get();
+		return null;
 	}
 }
