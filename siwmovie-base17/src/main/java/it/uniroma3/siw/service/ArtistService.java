@@ -24,11 +24,10 @@ public class ArtistService {
 			artistRepository.save(artist);
 		return res;
 	}
-
-	public Object findMovieById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+    public Artist saveArtist(Artist artist) {
+        return this.artistRepository.save(artist);
+    }
 	
 	public Iterable<Artist> findAllArtist(){
 		return this.artistRepository.findAll();

@@ -28,6 +28,11 @@ public class MovieService {
 	public void createNewMovie(Movie movie) {
 		this.movieRepository.save(movie);
 	}
+	
+    @Transactional
+    public void updateMovie(Movie movie) {
+        movieRepository.save(movie);
+    }
 
 	public Movie findById(Long id) {
 		return this.movieRepository.findById(id).orElse(null);
