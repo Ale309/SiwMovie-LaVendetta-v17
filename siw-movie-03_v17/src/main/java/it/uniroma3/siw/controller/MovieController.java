@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import it.uniroma3.siw.controller.validator.MovieValidator;
 import it.uniroma3.siw.model.Artist;
 import it.uniroma3.siw.model.Movie;
+import it.uniroma3.siw.model.Review;
 import it.uniroma3.siw.service.ArtistService;
 import it.uniroma3.siw.service.MovieService;
 import jakarta.validation.Valid;
@@ -30,6 +31,9 @@ public class MovieController {
 
 	@Autowired 
 	private MovieValidator movieValidator;
+	
+	@Autowired
+	private GlobalController globalController;
 
 	@GetMapping(value="/admin/formNewMovie")
 	public String formNewMovie(Model model) {
@@ -101,8 +105,17 @@ public class MovieController {
 	@GetMapping("/movie/{id}")
 	public String getMovie(@PathVariable("id") Long id, Model model) {
 		Movie movie = this.movieService.findById(id);
+		
 		if(movie != null) {
 			model.addAttribute("movie", movie);
+			model.addAttribute(new Review());
+			model.addAttribute("reviews",movie.getReviews());
+			model.addAttribute("hasReviews",!movie.getReviews().isEmpty());
+
+			if(this.globalController.getUser() != null && this.globalController.getUser().getUsername() != null && this.movieService.alreadyReviewed(movie.getReviews(),this.globalController.getUser().getUsername()))
+	            model.addAttribute("hasNotAlredyCommented", false);
+	        else
+	            model.addAttribute("hasNotAlreadyCommented", true);
 			return "movie.html";
 
 		}else {

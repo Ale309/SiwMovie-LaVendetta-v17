@@ -85,7 +85,7 @@ public class MovieService {
 	}
 	
 
-    public String function(Model model, Movie movie, User user){
+    public String function(Model model, Movie movie, String username){
         Set<Artist> movieCast = new HashSet<>();
         if(movie.getActors() != null)
             movieCast.addAll(movie.getActors());
@@ -94,20 +94,22 @@ public class MovieService {
         model.addAttribute("movieCast", movieCast);
         model.addAttribute("movie", movie);
         model.addAttribute("director", movie.getDirector());
-        if(user != null && this.alreadyReviewed(movie.getReviews(),user.getUsername()))
-            model.addAttribute("hasComment", true);
+        if(username != null && this.alreadyReviewed(movie.getReviews(),username))
+            model.addAttribute("hasNotAlredyCommented", false);
         else
-            model.addAttribute("hasComment", false);
+            model.addAttribute("hasNotAlreadyCommented", true);
         model.addAttribute("review", new Review());
         model.addAttribute("reviews", movie.getReviews());
+        model.addAttribute("hasReviews", !movie.getReviews().isEmpty());
+
         return "movie.html";
     }
 
     @Transactional
-    public boolean alreadyReviewed(Set<Review> reviews,String author){
+    public boolean alreadyReviewed(Set<Review> reviews,String username){
         if(reviews != null)
             for(Review rev : reviews)
-                if(rev.getUsername().equals(author))
+                if(rev.getUsername().equals(username))
                     return true;
         return false;
     }

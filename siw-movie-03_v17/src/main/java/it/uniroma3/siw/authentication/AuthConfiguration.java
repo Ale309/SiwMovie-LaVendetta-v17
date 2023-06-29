@@ -15,6 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import static it.uniroma3.siw.model.Credentials.ADMIN_ROLE;
+import static it.uniroma3.siw.model.Credentials.DEFAULT_ROLE;
 
 import javax.sql.DataSource;
 
@@ -55,8 +56,8 @@ import javax.sql.DataSource;
                 .requestMatchers(HttpMethod.GET,"/","/index","/register","/login","/css/**", "/images/**", "favicon.ico","/movie","/movie/{id}","/artist","/artist/{id}").permitAll()
         		// chiunque (autenticato o no) può mandare richieste POST al punto di accesso per login e register 
                 .requestMatchers(HttpMethod.POST,"/register", "/login").permitAll()
-                .requestMatchers(HttpMethod.GET,"/admin/**").hasAnyAuthority(ADMIN_ROLE)
-                .requestMatchers(HttpMethod.POST,"/admin/**").hasAnyAuthority(ADMIN_ROLE)
+                .requestMatchers(HttpMethod.GET,"/admin/**","/addReview").hasAnyAuthority(ADMIN_ROLE)
+                .requestMatchers(HttpMethod.POST,"/admin/**","/addReview").hasAnyAuthority(ADMIN_ROLE)
         		// tutti gli utenti autenticati possono accere alle pagine rimanenti 
                 .anyRequest().authenticated()
                 // LOGIN: qui definiamo il login
