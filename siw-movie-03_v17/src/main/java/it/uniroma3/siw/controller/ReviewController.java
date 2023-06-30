@@ -31,25 +31,10 @@ public class ReviewController {
 	private GlobalController globalController;
 
 
-//	@PostMapping("/user/uploadReview/{movieId}")
-//	public String newReview(Model model, @Valid @ModelAttribute("review") Review review, BindingResult bindingResult, @PathVariable("movieId") Long id) {
-//		this.reviewValidator.validate(review,bindingResult);
-//		if(!bindingResult.hasErrors()) {
-//			Movie movie = this.movieService.findById(id);
-//			if(this.globalController.getUser() != null && !movie.getReviews().contains(review)){
-//				review.setUsername(this.globalController.getUser().getUsername());
-//				this.reviewService.saveReview(review);
-//				movie.getReviews().add(review);
-//			}
-//			this.movieService.saveMovie(movie);
-//			return this.movieService.function(model, movie, (User) this.globalController.getUser());
-//		}else
-//			return "movieError.html";
-//	}
-	
 	@PostMapping("/user/uploadReview/{movieId}")
 	public String newReview(Model model, @Valid @ModelAttribute("review") Review review, BindingResult bindingResult, @PathVariable("movieId") Long id) {
 		this.reviewValidator.validate(review,bindingResult);
+		if(!bindingResult.hasErrors()) {
 			Movie movie = this.movieService.findById(id);
 			if(this.globalController.getUser() != null && !movie.getReviews().contains(review)){
 				review.setUsername(this.globalController.getUser().getUsername());
@@ -58,7 +43,22 @@ public class ReviewController {
 			}
 			this.movieService.saveMovie(movie);
 			return this.movieService.function(model, movie, this.globalController.getUser().getUsername());
+		}else
+			return "movieError.html";
 	}
+	
+//	@PostMapping("/user/uploadReview/{movieId}")
+//	public String newReview(Model model, @Valid @ModelAttribute("review") Review review, BindingResult bindingResult, @PathVariable("movieId") Long id) {
+//		this.reviewValidator.validate(review,bindingResult);
+//			Movie movie = this.movieService.findById(id);
+//			if(this.globalController.getUser() != null && !movie.getReviews().contains(review)){
+//				review.setUsername(this.globalController.getUser().getUsername());
+//				this.reviewService.saveReview(review);
+//				movie.getReviews().add(review);
+//			}
+//			this.movieService.saveMovie(movie);
+//			return this.movieService.function(model, movie, this.globalController.getUser().getUsername());
+//	}
 
 	@GetMapping("/admin/deleteReview/{movieId}/{reviewId}")
 	public String removeReview(Model model, @PathVariable("movieId") Long movieId,@PathVariable("reviewId") Long reviewId){
