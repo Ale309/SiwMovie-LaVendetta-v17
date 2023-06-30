@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import it.uniroma3.siw.model.Artist;
 import it.uniroma3.siw.model.Movie;
 import it.uniroma3.siw.model.Review;
-import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.ArtistRepository;
 import it.uniroma3.siw.repository.MovieRepository;
 import jakarta.transaction.Transactional;

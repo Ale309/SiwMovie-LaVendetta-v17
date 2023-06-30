@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -30,7 +31,8 @@ public class Movie {
         @Max(2023)
         private Integer year;
         
-        private String urlImage;
+        @OneToOne
+        private Image img;
         
         @ManyToOne
         private Artist director;
@@ -64,12 +66,12 @@ public class Movie {
             this.year = year;
         }
         
-        public String getUrlImage() {
-            return urlImage;
+        public Image getUrlImage() {
+            return img;
         }
     
-        public void setUrlImage(String urlImage) {
-            this.urlImage = urlImage;
+        public void setUrlImage(Image img) {
+            this.img = img;
         }
     
         public Artist getDirector() {
