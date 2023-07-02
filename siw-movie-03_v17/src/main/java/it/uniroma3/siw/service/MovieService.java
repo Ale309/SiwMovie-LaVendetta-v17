@@ -1,5 +1,6 @@
 package it.uniroma3.siw.service;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -7,11 +8,14 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.model.Artist;
+import it.uniroma3.siw.model.Image;
 import it.uniroma3.siw.model.Movie;
 import it.uniroma3.siw.model.Review;
 import it.uniroma3.siw.repository.ArtistRepository;
+import it.uniroma3.siw.repository.ImageRepository;
 import it.uniroma3.siw.repository.MovieRepository;
 import jakarta.transaction.Transactional;
 
@@ -22,17 +26,27 @@ public class MovieService {
 	private MovieRepository movieRepository;
 	@Autowired
 	private ArtistRepository artistRepository;
+	@Autowired
+	private ImageRepository imageRepository;
 
 	@Transactional
-	public void createNewMovie(Movie movie) {
+	public Movie createNewMovie(Movie movie, MultipartFile multipartFile) {
+		try {
+
+            movie.setImg(imageRepository.save(new Image(multipartFile.getBytes())));
+
+        }
+        catch (IOException e){}
 		this.movieRepository.save(movie);
+		return movie;
 	}
 	
     @Transactional
     public void updateMovie(Movie movie) {
         movieRepository.save(movie);
     }
-
+    
+    @Transactional
 	public Movie findById(Long id) {
 		return this.movieRepository.findById(id).orElse(null);
 	}

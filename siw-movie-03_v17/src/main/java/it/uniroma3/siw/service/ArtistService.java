@@ -1,13 +1,17 @@
 package it.uniroma3.siw.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.model.Artist;
+import it.uniroma3.siw.model.Image;
 import it.uniroma3.siw.repository.ArtistRepository;
+import it.uniroma3.siw.repository.ImageRepository;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -15,16 +19,22 @@ public class ArtistService {
 	
 	@Autowired
 	private ArtistRepository artistRepository;
+	@Autowired
+	private ImageRepository imageRepository;
 	
 	@Transactional
-	public boolean createNewArtist(Artist artist) {
-		boolean res = false;
-		if(!this.artistRepository.existsByNameAndSurname(artist.getName(), artist.getSurname()))
-			res = true;
-			artistRepository.save(artist);
-		return res;
+	public Artist createNewArtist(Artist artist, MultipartFile multipartFile) {
+		try {
+
+            artist.setPicture(imageRepository.save(new Image(multipartFile.getBytes())));
+
+        }
+        catch (IOException e){}
+        this.artistRepository.save(artist);
+        return artist;
 	}
 	
+	@Transactional
     public Artist saveArtist(Artist artist) {
         return this.artistRepository.save(artist);
     }

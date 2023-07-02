@@ -66,11 +66,11 @@ public class Movie {
             this.year = year;
         }
         
-        public Image getUrlImage() {
+        public Image getImg() {
             return img;
         }
     
-        public void setUrlImage(Image img) {
+        public void setImg(Image img) {
             this.img = img;
         }
     

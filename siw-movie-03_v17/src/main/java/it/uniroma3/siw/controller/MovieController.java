@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.controller.validator.MovieValidator;
 import it.uniroma3.siw.model.Artist;
@@ -90,12 +91,11 @@ public class MovieController {
 	}
 
 	@PostMapping("/admin/movie")
-	public String newMovie(@Valid @ModelAttribute("movie") Movie movie, BindingResult bindingResult, Model model) {
+	public String newMovie(@Valid @ModelAttribute("movie") Movie movie, BindingResult bindingResult,@RequestParam("movieImage") MultipartFile multipartFile, Model model) {
 
 		this.movieValidator.validate(movie, bindingResult);
 		if (!bindingResult.hasErrors()) {
-			this.movieService.createNewMovie(movie);
-			model.addAttribute("movie", movie);
+			model.addAttribute("movie", this.movieService.createNewMovie(movie, multipartFile));
 			return "movie.html";
 		} else {
 			return "movieError.html";
@@ -105,10 +105,11 @@ public class MovieController {
 	@GetMapping("/movie/{id}")
 	public String getMovie(@PathVariable("id") Long id, Model model) {
 		Movie movie = this.movieService.findById(id);
-		
+		System.out.println("*********************************************************************");
+		System.out.println(movie.getTitle());
 		if(movie != null) {
 			model.addAttribute("movie", movie);
-			model.addAttribute(new Review());
+			model.addAttribute("review",new Review());
 			model.addAttribute("reviews",movie.getReviews());
 			model.addAttribute("hasReviews",!movie.getReviews().isEmpty());
 
