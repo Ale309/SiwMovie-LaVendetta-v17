@@ -25,6 +25,7 @@
 		<div>
 			<span th:text="${movie.title}">Up!</span>
 			<span th:text="'(' + ${movie.year} + ')'">2000</span>
+			<span><img th:src="@{'/image/' + ${movie.img.id}}"></span>
 		</div>
 		<div th:if="${movie.director}">
 			<span>Regista: </span><span th:text="${movie.director.name} + ' ' + ${movie.director.surname}">Steven

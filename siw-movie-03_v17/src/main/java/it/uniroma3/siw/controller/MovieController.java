@@ -105,8 +105,6 @@ public class MovieController {
 	@GetMapping("/movie/{id}")
 	public String getMovie(@PathVariable("id") Long id, Model model) {
 		Movie movie = this.movieService.findById(id);
-		System.out.println("*********************************************************************");
-		System.out.println(movie.getTitle());
 		if(movie != null) {
 			model.addAttribute("movie", movie);
 			model.addAttribute("review",new Review());
