@@ -1,9 +1,6 @@
 package it.uniroma3.siw.controller;
 
-import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.controller.validator.MovieValidator;
 import it.uniroma3.siw.model.Artist;
-import it.uniroma3.siw.model.Image;
 import it.uniroma3.siw.model.Movie;
 import it.uniroma3.siw.model.Review;
 import it.uniroma3.siw.service.ArtistService;
@@ -34,9 +30,6 @@ public class MovieController {
 
 	@Autowired
 	private ArtistService artistService;
-	
-	@Autowired
-	private ImageService imageService;
 	
 	@Autowired 
 	private MovieValidator movieValidator;

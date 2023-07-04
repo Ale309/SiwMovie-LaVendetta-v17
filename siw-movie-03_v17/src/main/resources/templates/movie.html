@@ -39,7 +39,7 @@
                     	<span th:text="${actor.name} + ' ' + ${actor.surname}">...</span>
                 	</div>
                 </div>
-                <div th:if="${movie.actors.isEmpty()}">
+                <div th:unless="${movie.actors}">
 					Non esistono
 				</div>
             </div>

@@ -38,8 +38,8 @@ public class MovieService {
 			movie.setImages(immagini);
         }
         catch (IOException e){}
-		this.movieRepository.save(movie);
-		return movie;
+
+		return 	this.movieRepository.save(movie);
 	}
 	
     @Transactional
