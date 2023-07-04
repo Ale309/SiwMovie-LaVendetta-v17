@@ -1,6 +1,9 @@
 package it.uniroma3.siw.controller;
 
+import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,9 +18,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.controller.validator.MovieValidator;
 import it.uniroma3.siw.model.Artist;
+import it.uniroma3.siw.model.Image;
 import it.uniroma3.siw.model.Movie;
 import it.uniroma3.siw.model.Review;
 import it.uniroma3.siw.service.ArtistService;
+import it.uniroma3.siw.service.ImageService;
 import it.uniroma3.siw.service.MovieService;
 import jakarta.validation.Valid;
 
@@ -29,7 +34,10 @@ public class MovieController {
 
 	@Autowired
 	private ArtistService artistService;
-
+	
+	@Autowired
+	private ImageService imageService;
+	
 	@Autowired 
 	private MovieValidator movieValidator;
 	
@@ -47,6 +55,7 @@ public class MovieController {
 		Movie movie = movieService.findById(id);
 		if(movie != null) {
 			model.addAttribute("movie", movieService.findById(id));
+			
 		}else {
 			return "movieError.html";
 		}
@@ -91,7 +100,7 @@ public class MovieController {
 	}
 
 	@PostMapping("/admin/movie")
-	public String newMovie(@Valid @ModelAttribute("movie") Movie movie, BindingResult bindingResult,@RequestParam("movieImage") MultipartFile multipartFile, Model model) {
+	public String newMovie(@Valid @ModelAttribute("movie") Movie movie, BindingResult bindingResult,@RequestParam("movieImage") MultipartFile[] multipartFile, Model model) {
 
 		this.movieValidator.validate(movie, bindingResult);
 		if (!bindingResult.hasErrors()) {
@@ -180,5 +189,7 @@ public class MovieController {
 			return "movieError.html";
 		}
 	}
+	
+
 
 }

@@ -25,7 +25,12 @@
 		<div>
 			<span th:text="${movie.title}">Up!</span>
 			<span th:text="'(' + ${movie.year} + ')'">2000</span>
-			<span><img th:src="@{'/image/' + ${movie.img.id}}"></span>
+			<div th:each="image: ${movie.images}">
+				<img th:src="@{'/image/' + ${image.id}}">
+				<button>
+					<a th:href="'/admin/deleteImage/' + ${movie.id} + '/' + ${image.id}">Rimuovi immagine</a>
+                </button>
+			</div>
 		</div>
 		<div th:if="${movie.director}">
 			<span>Regista: </span><span th:text="${movie.director.name} + ' ' + ${movie.director.surname}">Steven
@@ -35,6 +40,14 @@
 		<div th:unless="${movie.director}">
 			<a th:href="@{'/admin/addDirector/' + ${movie.id}}">Aggiungi regista</a>
 		</div>
+		<form th:action="@{'/admin/updateMovieImages/' + ${movie.id}}" method="POST" th:object="${movie}" enctype="multipart/form-data">
+			<div>
+				<label>Aggiungi immagini:</label> <span><input type="file" name="movieImage" multiple/></span>
+			</div>
+			<div>
+				<span><button type="submit">Conferma</button></span>
+			</div>
+		</form>
 
 		<div>
 			<span>Attori: </span>

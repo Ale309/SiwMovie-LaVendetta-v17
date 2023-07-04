@@ -30,11 +30,12 @@ public class MovieService {
 	private ImageRepository imageRepository;
 
 	@Transactional
-	public Movie createNewMovie(Movie movie, MultipartFile multipartFile) {
+	public Movie createNewMovie(Movie movie, MultipartFile[] multipartFile) {
 		try {
-
-            movie.setImg(imageRepository.save(new Image(multipartFile.getBytes())));
-
+			Set<Image> immagini = new HashSet<>();
+			for(MultipartFile file : multipartFile)
+				immagini.add(imageRepository.save(new Image(file.getBytes())));
+			movie.setImages(immagini);
         }
         catch (IOException e){}
 		this.movieRepository.save(movie);

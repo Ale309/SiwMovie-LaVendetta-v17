@@ -21,7 +21,9 @@
     <div th:if="${movie}">
         <span th:text="${movie.title}">...</span>
         <span th:text="'(' + ${movie.year} + ')'">...</span>
-        <span><img th:src="@{'/image/' + ${movie.img.id}}"></span>
+			<div th:each="image: ${movie.images}">
+				<img th:src="@{'/image/' + ${image.id}}">
+			</div>
         <div class="artist">
 			<span>Regista: </span>
             <div th:if="${movie.director}">
@@ -33,11 +35,11 @@
             <div>
                 <span>Attori: </span>
                 <div th:if="${movie.actors}">
-                <div th:each="actor: ${movie.actors}">
-                    <span th:text="${actor.name} + ' ' + ${actor.surname}">...</span>
+                	<div th:each="actor: ${movie.actors}">
+                    	<span th:text="${actor.name} + ' ' + ${actor.surname}">...</span>
+                	</div>
                 </div>
-                </div>
-                <div th:unless="${movie.actors}">
+                <div th:if="${movie.actors.isEmpty()}">
 					Non esistono
 				</div>
             </div>

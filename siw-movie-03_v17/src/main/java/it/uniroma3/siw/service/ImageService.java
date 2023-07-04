@@ -15,5 +15,15 @@ public class ImageService {
 	public Image findById(Long id) {
 		return this.imageRepository.findById(id).get();
 	}
+	
+	public Image saveImage(Image image) {
+		return this.imageRepository.save(image);
+	}
+	
+
+	public void deleteImage(Image image) {
+		this.imageRepository.delete(image);
+		
+	}
 
 }

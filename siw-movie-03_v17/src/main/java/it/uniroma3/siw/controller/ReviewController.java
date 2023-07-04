@@ -8,12 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import it.uniroma3.siw.controller.validator.ReviewValidator;
 import it.uniroma3.siw.model.Movie;
 import it.uniroma3.siw.model.Review;
-import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.service.MovieService;
 import it.uniroma3.siw.service.ReviewService;
 import jakarta.validation.Valid;
@@ -46,19 +44,6 @@ public class ReviewController {
 		}else
 			return "movieError.html";
 	}
-	
-//	@PostMapping("/user/uploadReview/{movieId}")
-//	public String newReview(Model model, @Valid @ModelAttribute("review") Review review, BindingResult bindingResult, @PathVariable("movieId") Long id) {
-//		this.reviewValidator.validate(review,bindingResult);
-//			Movie movie = this.movieService.findById(id);
-//			if(this.globalController.getUser() != null && !movie.getReviews().contains(review)){
-//				review.setUsername(this.globalController.getUser().getUsername());
-//				this.reviewService.saveReview(review);
-//				movie.getReviews().add(review);
-//			}
-//			this.movieService.saveMovie(movie);
-//			return this.movieService.function(model, movie, this.globalController.getUser().getUsername());
-//	}
 
 	@GetMapping("/admin/deleteReview/{movieId}/{reviewId}")
 	public String removeReview(Model model, @PathVariable("movieId") Long movieId,@PathVariable("reviewId") Long reviewId){

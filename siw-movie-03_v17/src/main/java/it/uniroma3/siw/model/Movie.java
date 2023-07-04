@@ -1,5 +1,6 @@
 package it.uniroma3.siw.model;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -10,7 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -31,9 +31,9 @@ public class Movie {
         @Max(2023)
         private Integer year;
         
-        @OneToOne
-        private Image img;
-        
+        @OneToMany
+        private Set<Image> images;
+
         @ManyToOne
         private Artist director;
         
@@ -66,12 +66,16 @@ public class Movie {
             this.year = year;
         }
         
-        public Image getImg() {
-            return img;
+        public Set<Image> getImages() {
+            return images;
         }
     
-        public void setImg(Image img) {
-            this.img = img;
+        public void setImages(Set<Image> images) {
+            this.images = images;
+        }
+        
+        public void addImages(Set<Image> image) {
+        	this.images.addAll(image);
         }
     
         public Artist getDirector() {
