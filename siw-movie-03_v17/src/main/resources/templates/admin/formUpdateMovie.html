@@ -2,9 +2,7 @@
 <html>
 
 <head>
-	<title>
-		New Movie
-	</title>
+	<title>New Movie</title>
 	<link rel="stylesheet" href="/css/stile.css" />
 </head>
 
@@ -29,7 +27,7 @@
 				<img th:src="@{'/image/' + ${image.id}}">
 				<button>
 					<a th:href="'/admin/deleteImage/' + ${movie.id} + '/' + ${image.id}">Rimuovi immagine</a>
-                </button>
+				</button>
 			</div>
 		</div>
 		<div th:if="${movie.director}">
@@ -42,7 +40,7 @@
 		</div>
 		<form th:action="@{'/admin/updateMovieImages/' + ${movie.id}}" method="POST" th:object="${movie}" enctype="multipart/form-data">
 			<div>
-				<label>Aggiungi immagini:</label> <span><input type="file" name="movieImage" multiple/></span>
+				<label>Aggiungi immagini:</label> <span><input type="file" name="movieImage" multiple /></span>
 			</div>
 			<div>
 				<span><button type="submit">Conferma</button></span>
@@ -58,7 +56,8 @@
 				<button type="button">Modifica</button>
 			</a>
 		</div>
-		<div th:unless="${movie}">Film non esistente</div>
+	</div>
+	<div th:unless="${movie}">Film non esistente</div>
 </body>
 
 </html>

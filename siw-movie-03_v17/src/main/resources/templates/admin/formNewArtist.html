@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-	<title>
-		New Artist
-	</title>
+	<title>New Artist</title>
 	<link rel="stylesheet" href="/css/stile.css" />
 </head>
-
 <body>
 	<header>
 		<div th:if="${userDetails}">
@@ -19,7 +15,9 @@
 		</div>
 	</header>
 
-	<div><a href="/"><img src="/images/logo-siw.png" width="50%"/></a></div>
+	<div>
+		<a href="/"><img src="/images/logo-siw.png" width="50%" /></a>
+	</div>
 	<h1>Aggiungi un artista</h1>
 	<form th:action="@{/admin/artist}" method="POST" th:object="${artist}" enctype="multipart/form-data">
 		<div>
@@ -39,7 +37,7 @@
 		</div>
 
 		<div>
-			<label>Carica fotografia:</label> <span><input type="file" name ="artistImage" /></span>
+			<label>Carica fotografia:</label> <span><input type="file" name="artistImage" /></span>
 		</div>
 		
 		<div>
@@ -47,5 +45,4 @@
 		</div>
 	</form>
 </body>
-
 </html>

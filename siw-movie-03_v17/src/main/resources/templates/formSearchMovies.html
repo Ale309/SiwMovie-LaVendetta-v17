@@ -4,7 +4,6 @@
 	<title>Cerca Film</title>
 	<link rel="stylesheet" href="/css/stile.css" />
 </head>
-
 <body>
 	<header>
 		<div th:if="${userDetails}">
@@ -16,13 +15,13 @@
 		</div>
 	</header>
 
-	<div><a href="/"><img src="/images/logo-siw.png" width="50%"/></a></div>
+	<div>
+		<a href="/"><img src="/images/logo-siw.png" width="50%"/></a>
+	</div>
 	<h1>Cerca film per anno</h1>
 	<form th:action="@{/searchMovies}" method="post">
-		<div>Anno: <input type="text" th:value="${year}" name="year" />
-		</div>
+		<div>Anno: <input type="text" th:value="${year}" name="year" /></div>
 		<div><input type="submit" /></div>
 	</form>
 </body>
-
 </html>

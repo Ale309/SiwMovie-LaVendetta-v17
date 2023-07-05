@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:sec="http://www.w3.org/1999/xhtml">
-
 <head>
     <title>Film</title>
     <link rel="stylesheet" href="/css/stile.css" />
 </head>
-
 <body>
     <header>
         <div th:if="${userDetails}">
@@ -21,83 +19,81 @@
     <div th:if="${movie}">
         <span th:text="${movie.title}">...</span>
         <span th:text="'(' + ${movie.year} + ')'">...</span>
-			<div th:each="image: ${movie.images}">
-				<img th:src="@{'/image/' + ${image.id}}">
-			</div>
+        <div th:each="image: ${movie.images}">
+            <img th:src="@{'/image/' + ${image.id}}">
+        </div>
         <div class="artist">
-			<span>Regista: </span>
+            <span>Regista: </span>
             <div th:if="${movie.director}">
                 <span th:text="${movie.director.name} + ' ' + ${movie.director.surname}">...</span>
             </div>
             <div th:unless="${movie.director}">
-				Non esiste
-			</div>
+                Non esiste
+            </div>
             <div>
                 <span>Attori: </span>
                 <div th:if="${movie.actors}">
-                	<div th:each="actor: ${movie.actors}">
-                    	<span th:text="${actor.name} + ' ' + ${actor.surname}">...</span>
-                	</div>
+                    <div th:each="actor: ${movie.actors}">
+                        <span th:text="${actor.name} + ' ' + ${actor.surname}">...</span>
+                    </div>
                 </div>
                 <div th:unless="${movie.actors}">
-					Non esistono
-				</div>
+                    Non esistono
+                </div>
             </div>
         </div>
         
-    <h1>Recensioni</h1>
-            <div th:if="${hasReviews}">
-                    <ul th:each="rev : ${reviews}">
-                        <div>
-                            <span th:text="${rev.username}"></span> <span> Ha Scritto </span>
-                        </div>
-                        <div>
-                            <span>Titolo: </span> <span th:text="${rev.title}"></span>
-                        </div>
-                        <div>
-                            <span>Descrizione: </span> <span th:text="${rev.description}"></span>
-                        </div>
-                        <div class="bottom-label">
-                            <span>Rating: </span><span th:text="'Rating: ' + ${rev.rating}"></span>
-                            <button sec:authorize="hasAuthority('ADMIN')">
-                                <a th:href="'/admin/deleteReview/' + ${movie.id} + '/' + ${rev.id}">Delete</a>
-                            </button>
-                        </div>
-                    </ul>
-            </div>
-            <div th:unless="${hasReviews}">
-				Non ci sono recensioni per ora. Perche' non ne aggiungi tu una? :)
-			</div>
-
-            <div th:if="${hasNotAlreadyCommented}">
-                <div sec:authorize="hasAuthority('DEFAULT') || hasAuthority('ADMIN')">
-                    <h1>Aggiungi recensione</h1>
-                    <form th:action="@{'/user/uploadReview/' + ${movie.id}}" method="post" th:object="${review}" class="form">
-                        <div>
-                            <span><input hidden th:value="${user}" th:field="${review.username}" /></span>
-                        </div>
-                        <div>
-                            <label>Titolo:</label>
-                            <span><input type="text" th:field="${review.title}" /></span>
-                        </div>
-                        <div>
-                            <label>Descrizione:</label>
-                            <span><input type="text" th:field="${review.description}" /></span>
-                        </div>
-                        <div>
-                            <label>Rating:</label>
-                            <span><input type="number" min="1" max="5" th:field="${review.rating}" /></span>
-                        </div>
-                        <div>
-                            <span><button type="submit">Conferma</button></span>
-                        </div>
-                    </form>
+        <h1>Recensioni</h1>
+        <div th:if="${hasReviews}">
+            <ul th:each="rev : ${reviews}">
+                <div>
+                    <span th:text="${rev.username}"></span> <span> Ha Scritto </span>
                 </div>
-            </div>
-            
+                <div>
+                    <span>Titolo: </span> <span th:text="${rev.title}"></span>
+                </div>
+                <div>
+                    <span>Descrizione: </span> <span th:text="${rev.description}"></span>
+                </div>
+                <div class="bottom-label">
+                    <span>Rating: </span><span th:text="'Rating: ' + ${rev.rating}"></span>
+                    <button sec:authorize="hasAuthority('ADMIN')">
+                        <a th:href="'/admin/deleteReview/' + ${movie.id} + '/' + ${rev.id}">Delete</a>
+                    </button>
+                </div>
+            </ul>
         </div>
-        <div th:unless="${movie}">Non esiste</div>
-    </div>
-</body>
+        <div th:unless="${hasReviews}">
+            Non ci sono recensioni per ora. Perché non ne aggiungi una? :)
+        </div>
 
+        <div th:if="${hasNotAlreadyCommented}">
+            <div sec:authorize="hasAuthority('DEFAULT') || hasAuthority('ADMIN')">
+                <h1>Aggiungi recensione</h1>
+                <form th:action="@{'/user/uploadReview/' + ${movie.id}}" method="post" th:object="${review}" class="form">
+                    <div>
+                        <span><input hidden th:value="${user}" th:field="${review.username}" /></span>
+                    </div>
+                    <div>
+                        <label>Titolo:</label>
+                        <span><input type="text" th:field="${review.title}" /></span>
+                    </div>
+                    <div>
+                        <label>Descrizione:</label>
+                        <span><input type="text" th:field="${review.description}" /></span>
+                    </div>
+                    <div>
+                        <label>Rating:</label>
+                        <span><input type="number" min="1" max="5" th:field="${review.rating}" /></span>
+                    </div>
+                    <div>
+                        <span><button type="submit">Conferma</button></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+            
+    </div>
+    <div th:unless="${movie}">Non esiste</div>
+</body>
 </html>
