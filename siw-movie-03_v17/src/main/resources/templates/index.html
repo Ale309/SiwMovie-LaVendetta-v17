@@ -8,27 +8,26 @@
 </head>
 <body>
 	<header>
-		<div th:if="${userDetails}">
-			<span th:text="${userDetails.username}"></span>
-			<a href="/logout">Logout</a>
-		</div>
-		<div th:unless="${user}">
-			<a href="/login">Login</a>
+		<nav>
+			<div th:if="${userDetails}" class="login">
+				<span th:text="${userDetails.username}"></span>
+				<a href="/logout"><button>Logout</button></a>
+			</div>
+			<div th:unless="${user}">
+				<a href="/login"><button>Login</button></a>
+			</div>
+		</nav>
+	</header>
+	<section>
+		<div>
+			<a href="/movie">Elenco Film</a>
 		</div>
 		<div>
-			ciao
+			<a href="/artist">Elenco Artisti</a>
 		</div>
-	</header>
-
-	<div>
-		<img src="/images/logo-siw.png" width="50%" />
-	</div>
-	<h1>Consulta l'archivio</h1>
-	<div>
-		<a href="/movie">Elenco Film</a>
-	</div>
-	<div>
-		<a href="/artist">Elenco Artisti</a>
-	</div>
+	</section>
+	<footer>
+    Made by MADALIN ALEXANDRU AVADANEI
+  </footer>
 </body>
 </html>

@@ -18,8 +18,6 @@
 			<a href="/login">Login</a>
 		</div>
 	</header>
-	
-	<div><a href="/"><img src="/images/logo-siw.png" width="50%"/></a></div>
 	<h1>Aggiungi un film</h1>
 	<form th:action="@{/admin/movie}" method="POST" th:object="${movie}" enctype="multipart/form-data">
   		<div th:if="${#fields.hasGlobalErrors()}">

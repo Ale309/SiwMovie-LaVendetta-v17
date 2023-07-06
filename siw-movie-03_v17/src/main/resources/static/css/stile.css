@@ -1,8 +1,34 @@
+nav {
+	background-color: rgb(0, 0, 0);
+ 	color: white;
+  	height: 3em;
+  	margin-bottom: 0.5em;
+  	padding: 0.2em;
+  	text-align: right; 
+  	margin: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body { 
     font-family: "Geneva";
     color:dimgrey;
+
 }
 
+section{
+	width: 100%;
+	height: 91%;
+    background-image: url(/images/home.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
 a { 
 	text-decoration: none; 
     color: darkgrey;
@@ -17,17 +43,21 @@ label {
 	display: inline-block;
 }
 
-header {
-  background-color: rgb(98, 192, 144);
-  color: white;
-  height: 1.5em;
-  margin-bottom: 0.5em;
-  padding: 0.2em;
-  text-align: right; 
-}
 
 header a { 
 	text-decoration: none; 
     color: white;
     font-size: 0.6em;
+}
+
+footer {
+	background-color: black;
+	text-align: center;
+	position: fixed;
+	margin: 0;
+  	bottom: 0;
+  	left: 0;
+  	width: 100%;
+
+  	height: 30px;
 }
