@@ -1,5 +1,8 @@
 package it.uniroma3.siw.service;
 
+import java.util.Collection;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -7,10 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.UserRepository;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * The UserService handles logic for Users.
@@ -49,11 +48,8 @@ public class UserService {
      * @return a List with all the retrieved Users
      */
     @Transactional
-    public List<User> getAllUsers() {
-        List<User> result = new ArrayList<>();
-        Iterable<User> iterable = this.userRepository.findAll();
-        for(User user : iterable)
-            result.add(user);
-        return result;
+    public Collection<User> getAllUsers() {
+
+        return (Collection<User>) this.userRepository.findAll();
     }
 }
