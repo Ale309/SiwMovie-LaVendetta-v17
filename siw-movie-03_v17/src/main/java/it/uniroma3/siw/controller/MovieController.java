@@ -114,7 +114,7 @@ public class MovieController {
 			model.addAttribute("hasReviews",!movie.getReviews().isEmpty());
 
 			if(this.globalController.getUser() != null && this.globalController.getUser().getUsername() != null && this.movieService.alreadyReviewed(movie.getReviews(),this.globalController.getUser().getUsername()))
-	            model.addAttribute("hasNotAlredyCommented", false);
+	            model.addAttribute("hasNotAlreadyCommented", false);
 	        else
 	            model.addAttribute("hasNotAlreadyCommented", true);
 			return "movie.html";
