@@ -18,7 +18,6 @@ import it.uniroma3.siw.model.Artist;
 import it.uniroma3.siw.model.Movie;
 import it.uniroma3.siw.model.Review;
 import it.uniroma3.siw.service.ArtistService;
-import it.uniroma3.siw.service.ImageService;
 import it.uniroma3.siw.service.MovieService;
 import jakarta.validation.Valid;
 
