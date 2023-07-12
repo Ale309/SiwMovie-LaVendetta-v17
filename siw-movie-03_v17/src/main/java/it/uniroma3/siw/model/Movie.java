@@ -1,6 +1,5 @@
 package it.uniroma3.siw.model;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 

@@ -18,7 +18,7 @@
 	<div th:if="${movies.isEmpty()}">Non ci sono film che soddisfano i requisiti</div>
 	<ul th:if="${!movies.isEmpty()}">
 		<li th:each="movie : ${movies}">
-			<a href="movie.html" th:href="@{'/movie' + '/' + ${movie.id}}" th:text="${movie.title} + ' (' + ${movie.year}+')'">Up! (2000)</a>
+			<a th:href="@{'/movie' + '/' + ${movie.id}}" th:text="${movie.title} + ' (' + ${movie.year}+')'">Up! (2000)</a>
 		</li>
 	</ul>
 </body>
