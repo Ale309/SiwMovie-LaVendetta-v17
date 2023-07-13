@@ -56,7 +56,7 @@
                     <span>Descrizione: </span> <span th:text="${rev.description}"></span>
                 </div>
                 <div class="bottom-label">
-                    <span>Rating: </span><span th:text="'Rating: ' + ${rev.rating}"></span>
+                    <span>Rating: </span><span th:text="${rev.rating}"></span>
                     <button sec:authorize="hasAuthority('ADMIN')">
                         <a th:href="'/admin/deleteReview/' + ${movie.id} + '/' + ${rev.id}">Delete</a>
                     </button>
