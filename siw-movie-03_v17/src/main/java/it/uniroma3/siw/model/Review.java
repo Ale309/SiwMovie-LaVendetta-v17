@@ -28,7 +28,6 @@ public class Review {
     @Max(5)
     private Integer rating;
 
-    @NotBlank
     private String description;
 
     public Long getId() {

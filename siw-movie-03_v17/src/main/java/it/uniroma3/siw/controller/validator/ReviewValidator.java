@@ -20,7 +20,7 @@ public class ReviewValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Review review = (Review) target;
-        if(review.getTitle() != null && review.getDescription() != null && review.getRating() != null
+        if(review.getTitle() != null && review.getRating() != null
                 && this.reviewRepository.existsByUsernameAndTitleAndRatingAndDescription(review.getUsername(),review.getTitle(),review.getRating(),review.getDescription())){
             errors.reject("review.duplicate");
         }
