@@ -1,33 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>
-		MovieTime - Homepage
-	</title>
-	<link rel="stylesheet" href="/css/stile.css" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content"width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>MovieTime</title>
+	<link rel="stylesheet" href="/css/index.css" />
 </head>
 <body>
 	<header>
+		<a class="angolohome" href="/">Home</a>
 		<nav>
-			<div th:if="${userDetails}" class="login">
-				<span th:text="${userDetails.username}"></span>
-				<a href="/logout"><button>Logout</button></a>
-			</div>
-			<div th:unless="${userDetails}">
-				<a href="/login"><button>Login</button></a>
-			</div>
+			<ul class="menu">
+				<li><a href="/movie">Movies</a></li>
+				<li><a href="/artist">Artists</a></li>
+				<li th:if="${userDetails}"><em>| User: <span th:text="${userDetails.username}"></span></em></li>
+				<li th:if="${userDetails}"><a href="/logout"><button>Logout</button></a></li>
+				<li th:unless="${userDetails}"><a href="/login"><button>Login</button></a></li>
+			</ul>
 		</nav>
 	</header>
 	<section>
-		<div>
-			<a href="/movie">Elenco Film</a>
-		</div>
-		<div>
-			<a href="/artist">Elenco Artisti</a>
-		</div>
+		<h2>Welcome on</h2>
+		<img src="/images/MovieTimeHome.png" alt="Logo" width="180" class="logohome">
 	</section>
 	<footer>
-    Made by MADALIN ALEXANDRU AVADANEI
-  </footer>
+		<div>
+			<p>copyright &copy; 2023 MovieTime. designed by <span>MADALIN ALEXANDRU AVADANEI</span></p>
+		</div>
+  	</footer>
 </body>
 </html>

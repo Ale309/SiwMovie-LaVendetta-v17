@@ -1,35 +1,48 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-	<title>SiwMovie - Homepage</title>
-	<link rel="stylesheet" href="/css/stile.css" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content"width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>MovieTime - Admin</title>
+	<link rel="stylesheet" href="/css/indexAdmin.css" />
 </head>
-
 <body>
 	<header>
-		<div th:if="${userDetails}">
-			<span th:text="${userDetails.username}"></span>
-			<a href="/logout">Logout</a>
-		</div>
-		<div th:unless="${userDetails}">
-			<a href="/login">Login</a>
-		</div>
+		<a href="/">
+			<img src="/images/MovieTime.png" alt="Logo" width="180" class="logo">
+		</a>
+		<nav>
+			<ul class="menu">
+				<li><a href="/movie">Movies</a></li>
+				<li><a href="/artist">Artists</a></li>
+				<li>
+					<a>Manage movies</a>
+					<ul class="dropdown-menu">
+						<li><a href="/admin/formNewMovie">Add a new film</a></li>
+						<li><a href="/admin/manageMovies">Update movies</a></li>
+						<li><a href="/formSearchMovies">Find movie by year</a></li>
+					</ul>
+				</li>
+				<li>
+					<a>Manage artists</a>
+					<ul class="dropdown-menu">
+						<li><a href="/admin/formNewArtist">Add a new artist</a></li>
+					</ul>
+				</li>
+				<li th:if="${userDetails}"><em>| User: <span th:text="${userDetails.username}"></span></em></li>
+				<li th:if="${userDetails}"><a href="/logout"><button>Logout</button></a></li>
+				<li th:unless="${userDetails}"><a href="/login"><button>Login</button></a></li>
+			</ul>
+		</nav>
 	</header>
-	<h1>Consulta l'archivio</h1>
-	<div>
-		<a href="/movie">Elenco Film</a>
-	</div>
-	<div>
-		<a href="/artist">Elenco Artisti</a>
-	</div>
-	<h1>Operazioni per amministratore</h1>
-	<div>
-		<a href="/admin/indexMovie">Operazioni sui film</a>
-	</div>
-	<div>
-		<a href="/admin/indexArtist">Operazioni sugli artisti</a>
-	</div>
+	<section>
+		<h2>Welcome back!</h2>
+	</section>
+	<footer>
+		<div>
+			<p>copyright &copy; 2023 MovieTime. designed by <span>MADALIN ALEXANDRU AVADANEI</span></p>
+		</div>
+  	</footer>
 </body>
-
 </html>

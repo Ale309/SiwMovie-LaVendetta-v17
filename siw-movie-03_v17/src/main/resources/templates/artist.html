@@ -1,26 +1,97 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Artista</title>
-    <link rel="stylesheet" href="/css/stile.css" />
-  </head>
-
-  <body>
-    <header>
-      <div th:if="${userDetails}">
-        <span th:text="${userDetails.username}"></span>
-        <a href="/logout">Logout</a>
-      </div>
-      <div th:unless="${userDetails}">
-        <a href="/login">Login</a>
-      </div>
-    </header>
-    <h1>Dettagli Artista</h1>
+<html xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content"width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>MovieTime - Artist</title>
+	<link rel="stylesheet" href="/css/artist.css" />
+</head>
+<body>
+	<header>
+			<img src="/images/MovieTime.png" alt="Logo" width="180" class="logo">
+		<div>
+		
+		<nav th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+			<ul class="menu">
+				<li><a href="/movie">Movies</a></li>
+				<li><a href="/artist">Artists</a></li>
+				<li>
+					<a>Manage movies</a>
+					<ul class="dropdown-menu">
+						<li><a href="/admin/formNewMovie">Add a new film</a></li>
+						<li><a href="/admin/manageMovies">Update movies</a></li>
+						<li><a href="/formSearchMovies">Find movie by year</a></li>
+					</ul>
+				</li>
+				<li>
+					<a>Manage artists</a>
+					<ul class="dropdown-menu">
+						<li><a href="/admin/formNewArtist">Add a new artist</a></li>
+					</ul>
+				</li>
+				<li th:if="${userDetails}"><em>| User: <span th:text="${userDetails.username}"></span></em></li>
+				<li th:if="${userDetails}"><a href="/logout"><button>Logout</button></a></li>
+				<li th:unless="${userDetails}"><a href="/login"><button>Login</button></a></li>
+			</ul>
+		</nav>
+		<nav th:unless="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+			<ul class="menu">
+				<li><a href="/movie">Movies</a></li>
+				<li><a href="/artist">Artists</a></li>
+				<li th:if="${userDetails}"><em>| User: <span th:text="${userDetails.username}"></span></em></li>
+				<li th:if="${userDetails}"><a href="/logout"><button>Logout</button></a></li>
+				<li th:unless="${userDetails}"><a href="/login"><button>Login</button></a></li>
+			</ul>
+		</nav>
+	</header>
+    
+    
+    
+    <h1>Artist details</h1>
     <div th:if="${artist}">
-      <span th:text="${artist.name} + ' ' + ${artist.surname}">Dino Risi</span>
-      <span th:text="'(' + ${artist.dateOfBirth} + ')'">20/20/2000</span>
-      <span><img th:src="@{'/image/' + ${artist.picture.id}}"></span>
+		<div class="glass">
+			<h2 th:text="${artist.name} + ' ' + ${artist.surname} + ' (' + ${artist.dateOfBirth} + ')'">Dino Risi</h2>
+      		<div class="box">
+				<div class="box-img">
+				  <img th:src="@{'/image/' + ${artist.picture.id}}">
+				</div>
+			</div>
+		</div>
     </div>
-    <div th:unless="${artist}">Non esiste</div>
-  </body>
+    <div th:unless="${artist}">Doesn't exist</div>
+    
+    
+	<footer>
+		<div>
+			<p>copyright &copy; 2023 MovieTime. designed by <span>MADALIN ALEXANDRU AVADANEI</span></p>
+		</div>
+  	</footer>
+  	
+  	<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    adjustFooterPosition();
+
+    window.addEventListener('resize', adjustFooterPosition);
+    window.addEventListener('scroll', adjustFooterPosition);
+
+    function adjustFooterPosition() {
+      const footer = document.querySelector('footer');
+      const body = document.body;
+      const html = document.documentElement;
+      const windowHeight = window.innerHeight;
+      const bodyHeight = Math.max(body.scrollHeight, body.offsetHeight);
+      const htmlHeight = Math.max(html.scrollHeight, html.offsetHeight);
+      const pageHeight = Math.max(bodyHeight, htmlHeight);
+
+      if (pageHeight > windowHeight) {
+        footer.style.position = 'static';
+      } else {
+        footer.style.position = 'fixed';
+      }
+    }
+  });
+</script>
+
+</body>
 </html>

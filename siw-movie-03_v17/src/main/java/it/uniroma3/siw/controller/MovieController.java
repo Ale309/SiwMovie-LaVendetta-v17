@@ -138,7 +138,7 @@ public class MovieController {
 	@PostMapping("/searchMovies")
 	public String searchMovies(Model model, @RequestParam int year) {
 		model.addAttribute("movies", this.movieService.findByYear(year));
-		return "foundMovies.html";
+		return "movies.html";
 	}
 
 	@GetMapping("/admin/updateActors/{id}")

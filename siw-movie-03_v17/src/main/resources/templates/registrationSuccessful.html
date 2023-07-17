@@ -1,33 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>SiwMovie - Registrazione conclusa</title>
-	<link rel="stylesheet" href="/css/stile.css" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content"width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Registration Successful!</title>
+	<link rel="stylesheet" href="/css/registrationSuccessful.css" />
 </head>
 <body>
 	<header>
-		<div th:if="${userDetails}">
-			<span th:text="${userDetails.username}"></span>
-			<a href="/logout">Logout</a>
-		</div>
-		<div th:unless="${userDetails}">
-			<a href="/login">Login</a>
-		</div>
+		<a href="/">
+			<img src="/images/MovieTime.png" alt="Logo" width="180" class="logo">
+		</a>
+		<nav>
+			<ul class="menu">
+				<li><a href="/movie">Movies</a></li>
+				<li><a href="/artist">Artists</a></li>
+				<li th:if="${userDetails}"><em>| User: <span th:text="${userDetails.username}"></span></em></li>
+				<li th:if="${userDetails}"><a href="/logout"><button>Logout</button></a></li>
+				<li th:unless="${userDetails}"><a href="/login"><button>Login</button></a></li>
+			</ul>
+		</nav>
 	</header>
-
-	<h1>Congratulazioni ti sei registrato!</h1>
-
-	<div>
-		<span>Nome: </span>
-		<span th:text="${user.name}"></span>
-	</div>
-	<div>
-		<span>Cognome: </span>
-		<span th:text="${user.surname}"></span>
-	</div>
-	<div>
-		<span>Email: </span>
-		<span th:text="${user.email}"></span>
-	</div>
+	<section>
+		<div class="wrapper">
+			<h1>Registration successful!</h1>
+			<div>
+				<span>Name: </span>
+				<em><span th:text="${user.name}"></span></em>
+			</div>
+			<div>
+				<span>Surname: </span>
+				<em><span th:text="${user.surname}"></span></em>
+			</div>
+			<div>
+				<span>Email: </span>
+				<em><span th:text="${user.email}"></span></em>
+			</div>
+		</div>
+	</section>
+	<footer>
+		<div>
+			<p>copyright &copy; 2023 MovieTime. designed by <span>MADALIN ALEXANDRU AVADANEI</span></p>
+		</div>
+  	</footer>
 </body>
 </html>

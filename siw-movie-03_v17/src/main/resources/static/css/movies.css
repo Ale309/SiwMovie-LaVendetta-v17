@@ -1,0 +1,202 @@
+*{
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: 'Open Sans';
+}
+
+body{
+	background-image: url('/images/home.jpg');
+  	background-size: cover;
+  	background-position: center;
+  	background-repeat: no-repeat;
+  	z-index: 1;
+  	height: 100vh;
+}
+
+body::after{
+	content: '';
+	position: absolute;
+	background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
+	opacity: 0.9;
+	z-index: -1;
+}
+
+.angolohome{
+	margin-left: 20px;
+	transition: all .3s ease;
+}
+
+.angolohome:hover{
+	color: #d2c180;
+}
+
+.menu,
+a,
+button{
+	font-family: 'Open Sans';
+	font-weight: 300;
+	font-size: 18px;
+	color: #fff;
+	text-decoration: none;
+}
+
+.logo{
+	color: #fff;
+	margin-left: 10px;
+}
+
+header{
+	background: #242424;
+	height: 70px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 30 px 10%;
+}
+
+.menu{
+	list-style: none;
+}
+
+.menu li{
+	display: inline-block;
+	padding: 0 20px;
+}
+
+.menu li a{
+	transition: all .3s ease;
+}
+
+.menu a:hover{
+	color: #d2c180;
+}
+
+button{
+	padding: 10px 20px;
+  	border-radius: 20px;
+  	background-color: rgb(0,0,0);
+  	color: white;
+  	text-align: center;
+  	text-decoration: none;
+  	display: inline-block;
+  	font-size: 16px;
+  	margin: 4px 2px;
+  	cursor: pointer;
+}
+
+button:hover{
+	background: #242424;
+}
+
+footer{
+	position: absolute;
+	bottom:0;
+	left: 0;
+	right: 0;
+	background: #242424;
+	height:auto;
+	font-family: 'Open Sans';
+	padding-top: 5px;
+	padding-bottom: 5px;
+	color:#fff;
+	width: 100vw;
+	padding: 20 px 0;
+	text-align: center;
+}
+footer p{
+	font-size: 14 px;
+	word-spacing: 2 px;
+	text-transform: capitalize;
+}
+
+footer span{
+	text-transform: uppercase;
+	opacity: .4;
+	font-weight: 200;
+}
+
+.logohome{
+	margin-left:100px;
+	height: 150px;
+	width: auto;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #242424;
+  min-width: 50px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+
+}
+
+.dropdown-menu li {
+  display: block;
+  padding: 10px;
+}
+
+.menu li:hover .dropdown-menu {
+  display: block;
+}
+
+.movies-container{
+	max-width: 1500px;
+	margin-right: auto;
+	margin-left: auto;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(180px,auto));
+	gap: 1rem;
+	margin-top: 10px;
+	padding: 20px;
+}
+
+.glass{
+	max-width: 1500px;
+	margin-right: auto;
+	margin-left: auto;
+	background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	border-radius: 20px;
+	border: 1px solid rgba(255,255,255,0.18);
+	box-shadow: 0 8px 32px 0 rgba(0,0,0,0.37);
+	z-index: 1;
+}
+
+.box .box-img{
+	width: 100%;
+	height: 270px;
+}
+
+.box .box-img img{
+	width: 180px;
+	height: 270px;
+	object-fit: cover;
+}
+
+.box .box-img img:hover{
+	transform:translateY(-10px);
+	transition: 0.2s all linear;
+}
+
+h1{
+	color: #242424;
+	font-family: 'Arial';
+	margin: 10px;
+	margin-left: 225px;
+}
+
+h3,
+.box span{
+	color: black;
+}
+
+.update{
+	color: black;
+}
+.update:hover{
+	text-decoration: underline;
+
+}

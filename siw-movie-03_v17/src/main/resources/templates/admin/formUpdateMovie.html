@@ -1,61 +1,93 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-	<title>New Movie</title>
-	<link rel="stylesheet" href="/css/stile.css" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content"width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>MovieTime - Update movie</title>
+	<link rel="stylesheet" href="/css/formUpdateMovie.css" />
 </head>
-
 <body>
+	<div class="content">
 	<header>
-		<div th:if="${userDetails}">
-			<span th:text="${userDetails.username}"></span>
-			<a href="/logout">Logout</a>
-		</div>
-		<div th:unless="${userDetails}">
-			<a href="/login">Login</a>
-		</div>
+		<a href="/">
+			<img src="/images/MovieTime.png" alt="Logo" width="180" class="logo">
+		</a>
+		<nav>
+			<ul class="menu">
+				<li><a href="/movie">Movies</a></li>
+				<li><a href="/artist">Artists</a></li>
+				<li>
+					<a>Manage movies</a>
+					<ul class="dropdown-menu">
+						<li><a href="/admin/formNewMovie">Add a new film</a></li>
+						<li><a href="/admin/manageMovies">Update movies</a></li>
+						<li><a href="/formSearchMovies">Find movie by year</a></li>
+					</ul>
+				</li>
+				<li>
+					<a>Manage artists</a>
+					<ul class="dropdown-menu">
+						<li><a href="/admin/formNewArtist">Add a new artist</a></li>
+					</ul>
+				</li>
+				<li th:if="${userDetails}"><em>| User: <span th:text="${userDetails.username}"></span></em></li>
+				<li th:if="${userDetails}"><a href="/logout"><button>Logout</button></a></li>
+				<li th:unless="${userDetails}"><a href="/login"><button>Login</button></a></li>
+			</ul>
+		</nav>
 	</header>
-	<h1>Aggiorna film</h1>
+	
+	
+	<h1>Movie update</h1>
 	<div th:if="${movie}">
-		<div>
-			<span th:text="${movie.title}">Up!</span>
-			<span th:text="'(' + ${movie.year} + ')'">2000</span>
-			<div th:each="image: ${movie.images}">
-				<img th:src="@{'/image/' + ${image.id}}">
-				<button>
-					<a th:href="'/admin/deleteImage/' + ${movie.id} + '/' + ${image.id}">Rimuovi immagine</a>
-				</button>
+		<div class="glass">
+			<div class="images-container">
+				<div class="box">
+					<div th:each="image: ${movie.images}">
+						<div class="box-img">
+	            			<img th:src="@{'/image/' + ${image.id}}">
+						</div>
+						<a th:href="'/admin/deleteImage/' + ${movie.id} + '/' + ${image.id}">Rimuovi immagine</a>
+	        		</div>
+				</div>
 			</div>
-		</div>
-		<div th:if="${movie.director}">
-			<span>Regista: </span><span th:text="${movie.director.name} + ' ' + ${movie.director.surname}">Steven
-				Spielberg</span>
-			<a th:href="@{'/admin/addDirector/' + ${movie.id}}">Modifica regista</a></span>
-		</div>
-		<div th:unless="${movie.director}">
-			<a th:href="@{'/admin/addDirector/' + ${movie.id}}">Aggiungi regista</a>
-		</div>
-		<form th:action="@{'/admin/updateMovieImages/' + ${movie.id}}" method="POST" th:object="${movie}" enctype="multipart/form-data">
+			<h2 th:text="${movie.title} + '(' + ${movie.year} + ')'"></h2>
+			
+			
+			<div th:if="${movie.director}">
+				<span>Director: </span><span th:text="${movie.director.name} + ' ' + ${movie.director.surname}">...</span>
+				<a th:href="@{'/admin/addDirector/' + ${movie.id}}">Edit director</a></span>
+			</div>
+			<div th:unless="${movie.director}">
+				<a th:href="@{'/admin/addDirector/' + ${movie.id}}">Add director</a>
+			</div>
+			<form th:action="@{'/admin/updateMovieImages/' + ${movie.id}}" method="POST" th:object="${movie}" enctype="multipart/form-data">
+				<div>
+					<label>Add images:</label> <span><input type="file" name="movieImage" multiple required /></span>
+				</div>
+				<div>
+					<span><button type="submit">Confirm</button></span>
+				</div>
+			</form>
+	
 			<div>
-				<label>Aggiungi immagini:</label> <span><input type="file" name="movieImage" multiple /></span>
+				<span>Actors: </span>
+				<div th:each="actor: ${movie.actors}">
+					<span th:text="${actor.name} + ' ' + ${actor.surname}">...</span>
+				</div>
+				<a th:href="@{'/admin/updateActors/' + ${movie.id}}">
+					<button type="button">Edit</button>
+				</a>
 			</div>
-			<div>
-				<span><button type="submit">Conferma</button></span>
-			</div>
-		</form>
-
-		<div>
-			<span>Attori: </span>
-			<div th:each="actor: ${movie.actors}">
-				<span th:text="${actor.name} + ' ' + ${actor.surname}">Al Pacino</span>
-			</div>
-			<a th:href="@{'/admin/updateActors/' + ${movie.id}}">
-				<button type="button">Modifica</button>
-			</a>
 		</div>
 	</div>
-	<div th:unless="${movie}">Film non esistente</div>
+	<div th:unless="${movie}">Doesn't exist.</div>
+	</div>
+	<footer>
+		<div>
+			<p>copyright &copy; 2023 MovieTime. designed by <span>MADALIN ALEXANDRU AVADANEI</span></p>
+		</div>
+  	</footer>
 </body>
-
 </html>

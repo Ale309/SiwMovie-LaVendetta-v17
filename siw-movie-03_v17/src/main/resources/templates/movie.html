@@ -1,59 +1,98 @@
 <!DOCTYPE html>
 <html xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Film</title>
-    <link rel="stylesheet" href="/css/stile.css" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content"width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>MovieTime - Moviee</title>
+	<link rel="stylesheet" href="/css/movie.css" />
 </head>
 <body>
-    <header>
-        <div th:if="${userDetails}">
-            <span th:text="${userDetails.username}"></span>
-            <a href="/logout">Logout</a>
-        </div>
-        <div th:unless="${userDetails}">
-            <a href="/login">Login</a>
-        </div>
-    </header>
+	<header>
+			<img src="/images/MovieTime.png" alt="Logo" width="180" class="logo">
+		<div>
+		
+		<nav th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+			<ul class="menu">
+				<li><a href="/movie">Movies</a></li>
+				<li><a href="/artist">Artists</a></li>
+				<li>
+					<a>Manage movies</a>
+					<ul class="dropdown-menu">
+						<li><a href="/admin/formNewMovie">Add a new film</a></li>
+						<li><a href="/admin/manageMovies">Update movies</a></li>
+						<li><a href="/formSearchMovies">Find movie by year</a></li>
+					</ul>
+				</li>
+				<li>
+					<a>Manage artists</a>
+					<ul class="dropdown-menu">
+						<li><a href="/admin/formNewArtist">Add a new artist</a></li>
+					</ul>
+				</li>
+				<li th:if="${userDetails}"><em>| User: <span th:text="${userDetails.username}"></span></em></li>
+				<li th:if="${userDetails}"><a href="/logout"><button>Logout</button></a></li>
+				<li th:unless="${userDetails}"><a href="/login"><button>Login</button></a></li>
+			</ul>
+		</nav>
+		<nav th:unless="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+			<ul class="menu">
+				<li><a href="/movie">Movies</a></li>
+				<li><a href="/artist">Artists</a></li>
+				<li th:if="${userDetails}"><em>| User: <span th:text="${userDetails.username}"></span></em></li>
+				<li th:if="${userDetails}"><a href="/logout"><button>Logout</button></a></li>
+				<li th:unless="${userDetails}"><a href="/login"><button>Login</button></a></li>
+			</ul>
+		</nav>
+	</header>
 
-    <h1>Dettagli Film</h1>
-    <div th:if="${movie}">
-        <span th:text="${movie.title}">...</span>
-        <span th:text="'(' + ${movie.year} + ')'">...</span>
-        <div th:each="image: ${movie.images}">
-            <img th:src="@{'/image/' + ${image.id}}">
-        </div>
-        <div class="artist">
-            <span>Regista: </span>
+	<h1>Movie details</h1>
+	<div th:if="${movie}">
+		<div class="glass">
+			<div class="images-container">
+				<div class="box">
+					<div th:each="image: ${movie.images}">
+						<div class="box-img">
+	            			<img th:src="@{'/image/' + ${image.id}}">
+						</div>
+	        		</div>
+				</div>
+			</div>
+			<h2 th:text="${movie.title} + '(' + ${movie.year} + ')'"></h2>
+			
+			<div class="artist">
+            <span>Director: </span>
             <div th:if="${movie.director}">
                 <span th:text="${movie.director.name} + ' ' + ${movie.director.surname}">...</span>
             </div>
             <div th:unless="${movie.director}">
-                Non esiste
+                None
             </div>
             <div>
-                <span>Attori: </span>
+                <span>Actors: </span>
                 <div th:if="${movie.actors}">
                     <div th:each="actor: ${movie.actors}">
                         <span th:text="${actor.name} + ' ' + ${actor.surname}">...</span>
                     </div>
                 </div>
                 <div th:unless="${movie.actors}">
-                    Non esistono
+                    None
                 </div>
             </div>
         </div>
-        
-        <h1>Recensioni</h1>
+			
+			
+        <h1>Reviews</h1>
         <div th:if="${hasReviews}">
             <ul th:each="rev : ${reviews}">
                 <div>
                     <span th:text="${rev.username}"></span> <span> Ha Scritto </span>
                 </div>
                 <div>
-                    <span>Titolo: </span> <span th:text="${rev.title}"></span>
+                    <span>Title: </span> <span th:text="${rev.title}"></span>
                 </div>
                 <div>
-                    <span>Descrizione: </span> <span th:text="${rev.description}"></span>
+                    <span>Description: </span> <span th:text="${rev.description}"></span>
                 </div>
                 <div class="bottom-label">
                     <span>Rating: </span><span th:text="${rev.rating}"></span>
@@ -69,17 +108,17 @@
 
         <div th:if="${hasNotAlreadyCommented}">
             <div sec:authorize="hasAuthority('DEFAULT') || hasAuthority('ADMIN')">
-                <h1>Aggiungi recensione</h1>
+                <h1>Add a review</h1>
                 <form th:action="@{'/user/uploadReview/' + ${movie.id}}" method="post" th:object="${review}" class="form">
                     <div>
                         <span><input hidden th:value="${user}" th:field="${review.username}" /></span>
                     </div>
                     <div>
-                        <label>Titolo:</label>
+                        <label>Ttile:</label>
                         <span><input type="text" th:field="${review.title}" /></span>
                     </div>
                     <div>
-                        <label>Descrizione:</label>
+                        <label>Description:</label>
                         <span><input type="text" th:field="${review.description}" /></span>
                     </div>
                     <div>
@@ -87,13 +126,57 @@
                         <span><input type="number" min="1" max="5" th:field="${review.rating}" /></span>
                     </div>
                     <div>
-                        <span><button type="submit">Conferma</button></span>
+                        <span><button type="submit">Confirm</button></span>
                     </div>
                 </form>
             </div>
         </div>
-            
-    </div>
-    <div th:unless="${movie}">Non esiste</div>
+		</div>
+	</div>
+	<div th:unless="${movie}">Doesn't exist.</div>
+
+        	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    
+    <footer>
+		<div>
+			<p>copyright &copy; 2023 MovieTime. designed by <span>MADALIN ALEXANDRU AVADANEI</span></p>
+		</div>
+  	</footer>
+  	
+  	<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    adjustFooterPosition();
+
+    window.addEventListener('resize', adjustFooterPosition);
+    window.addEventListener('scroll', adjustFooterPosition);
+
+    function adjustFooterPosition() {
+      const footer = document.querySelector('footer');
+      const body = document.body;
+      const html = document.documentElement;
+      const windowHeight = window.innerHeight;
+      const bodyHeight = Math.max(body.scrollHeight, body.offsetHeight);
+      const htmlHeight = Math.max(html.scrollHeight, html.offsetHeight);
+      const pageHeight = Math.max(bodyHeight, htmlHeight);
+
+      if (pageHeight > windowHeight) {
+        footer.style.position = 'static';
+      } else {
+        footer.style.position = 'fixed';
+      }
+    }
+  });
+</script>
+    
 </body>
 </html>

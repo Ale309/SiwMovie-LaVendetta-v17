@@ -1,0 +1,132 @@
+*{
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: 'Open Sans';
+}
+
+body{
+	background-image: url('/images/login-registration.png');
+  	background-size: cover;
+  	background-position: center;
+  	background-repeat: no-repeat;
+  	height: 100vh;
+}
+
+section{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.menu,
+button{
+	font-family: 'Open Sans';
+	font-weight: 300;
+	font-size: 18px;
+	color: #fff;
+	text-decoration: none;
+}
+
+.menu a{
+	font-family: 'Open Sans';
+	font-weight: 300;
+	font-size: 18px;
+	color: #fff;
+	text-decoration: none;
+}
+
+.logo{
+	color: #fff;
+	margin-left: 10px;
+}
+
+header{
+	background: #242424;
+	height: 70px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 30 px 10%;
+}
+
+.menu{
+	list-style: none;
+}
+
+.menu li{
+	display: inline-block;
+	padding: 0 20px;
+}
+
+.menu li a{
+	transition: all .3s ease;
+}
+
+.menu a:hover{
+	color: #d2c180;
+}
+
+button{
+	padding: 10px 20px;
+  	border-radius: 20px;
+  	background-color: rgb(0,0,0);
+  	color: white;
+  	text-align: center;
+  	text-decoration: none;
+  	display: inline-block;
+  	font-size: 16px;
+  	margin: 4px 2px;
+  	cursor: pointer;
+}
+
+button:hover{
+	background: #242424;
+}
+
+footer{
+	position: absolute;
+	bottom:0;
+	left: 0;
+	right: 0;
+	background: #242424;
+	height:auto;
+	font-family: 'Open Sans';
+	padding-top: 10px;
+	padding-bottom: 10px;
+	color:#fff;
+	width: 100vw;
+	padding: 20 px 0;
+	text-align: center;
+}
+footer p{
+	font-size: 14 px;
+	word-spacing: 2 px;
+	text-transform: capitalize;
+}
+
+footer span{
+	text-transform: uppercase;
+	opacity: .4;
+	font-weight: 200;
+}
+
+.wrapper{
+	width: 500px;
+	background: white;
+	color: black;
+	border-radius: 10px;
+	padding: 30px 40px;
+	margin-top: 200px;
+}
+
+.wrapper h1{
+	font-size: 36px;
+	text-align: center;
+}
+
+.wrapper div{
+	font-size: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
