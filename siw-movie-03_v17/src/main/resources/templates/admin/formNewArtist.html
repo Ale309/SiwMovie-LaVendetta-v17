@@ -1,44 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>New Artist</title>
-	<link rel="stylesheet" href="/css/stile.css" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content"width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>MovieTime - New artist</title>
+	<link rel="stylesheet" href="/css/formNewArtist.css" />
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
 	<header>
-		<div th:if="${userDetails}">
-			<span th:text="${userDetails.username}"></span>
-			<a href="/logout">Logout</a>
-		</div>
-		<div th:unless="${userDetails}">
-			<a href="/login">Login</a>
-		</div>
+		<a href="/">
+			<img src="/images/MovieTime.png" alt="Logo" width="180" class="logo">
+		</a>
+		<nav>
+			<ul class="menu">
+				<li><a href="/movie">Movies</a></li>
+				<li><a href="/artist">Artists</a></li>
+				<li>
+					<a>Manage movies</a>
+					<ul class="dropdown-menu">
+						<li><a href="/admin/formNewMovie">Add a new movie</a></li>
+						<li><a href="/admin/manageMovies">Update movies</a></li>
+						<li><a href="/formSearchMovies">Find movie by year</a></li>
+					</ul>
+				</li>
+				<li>
+					<a>Manage artists</a>
+					<ul class="dropdown-menu">
+						<li><a href="/admin/formNewArtist">Add a new artist</a></li>
+					</ul>
+				</li>
+				<li th:if="${userDetails}"><em>| User: <span th:text="${userDetails.username}"></span></em></li>
+				<li th:if="${userDetails}"><a href="/logout"><button>Logout</button></a></li>
+				<li th:unless="${userDetails}"><a href="/login"><button>Login</button></a></li>
+			</ul>
+		</nav>
 	</header>
-	<h1>Aggiungi un artista</h1>
-	<form th:action="@{/admin/artist}" method="POST" th:object="${artist}" enctype="multipart/form-data">
-		<div>
-			<span th:text="${messaggioErrore}">Errore</span>
-		</div>
+	
+	<section>
+		<div class="wrapper">
+			<form th:action="@{/admin/artist}" method="POST" th:object="${artist}" enctype="multipart/form-data">
+				<h1>New artist</h1>
+				<div th:if="${#fields.hasGlobalErrors()}">
+  					<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p> 
+  				</div>
+  				<div class="input-box">
+					  <input type="text" placeholder="name" th:field="${artist.name}" required />
+					  <i class='bx bxs-edit'></i>
+					  <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+				</div>
+				<div class="input-box">
+					  <input type="text" placeholder="Surname" th:field="${artist.surname}" required />
+					  <i class='bx bxs-edit'></i>
+					  <span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></span>
+				</div>
+				<div class="input-box">
+					  <input type="date" th:field="${artist.dateOfBirth}" required />
+					  <span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></span>
+				</div>
+				
+				<div class="up">
+					<label>Upload picture:</label><input type="file" name="artistImage" required/>
+				</div>
 		
-		<div>
-			<label>Nome:</label> <span><input required type="text" th:field="${artist.name}" /></span>
+				<div>
+					<span><button type="submit">Add</button></span>
+				</div>
+				
+			</form>
 		</div>
-
+	</section>
+	
+	<footer>
 		<div>
-			<label>Cognome:</label> <span><input required type="text" th:field="${artist.surname}" /></span>
+			<p>copyright &copy; 2023 MovieTime. designed by <span>MADALIN ALEXANDRU AVADANEI</span></p>
 		</div>
-
-		<div>
-			<label>Data di nascita:</label> <span><input type="date" th:field="${artist.dateOfBirth}" /></span>
-		</div>
-
-		<div>
-			<label>Carica fotografia:</label> <span><input type="file" name="artistImage" /></span>
-		</div>
-		
-		<div>
-			<span><button type="submit">Conferma</button></span>
-		</div>
-	</form>
+  	</footer>
 </body>
 </html>

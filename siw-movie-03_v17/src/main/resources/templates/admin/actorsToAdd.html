@@ -1,38 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Scelta attori</title>
-	<link rel="stylesheet" href="/css/stile.css" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content"width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>MovieTime - Add actors to movie</title>
+	<link rel="stylesheet" href="/css/actorsToAdd.css" />
 </head>
 <body>
+	<div class="content">
 	<header>
-		<div th:if="${userDetails}">
-			<span th:text="${userDetails.username}"></span>
-			<a href="/logout">Logout</a>
-		</div>
-		<div th:unless="${userDetails}">
-			<a href="/login">Login</a>
-		</div>
+		<a href="/">
+			<img src="/images/MovieTime.png" alt="Logo" width="180" class="logo">
+		</a>
+		<nav>
+			<ul class="menu">
+				<li><a href="/movie">Movies</a></li>
+				<li><a href="/artist">Artists</a></li>
+				<li>
+					<a>Manage movies</a>
+					<ul class="dropdown-menu">
+						<li><a href="/admin/formNewMovie">Add a new movie</a></li>
+						<li><a href="/admin/manageMovies">Update movies</a></li>
+						<li><a href="/formSearchMovies">Find movie by year</a></li>
+					</ul>
+				</li>
+				<li>
+					<a>Manage artists</a>
+					<ul class="dropdown-menu">
+						<li><a href="/admin/formNewArtist">Add a new artist</a></li>
+					</ul>
+				</li>
+				<li th:if="${userDetails}"><em>| User: <span th:text="${userDetails.username}"></span></em></li>
+				<li th:if="${userDetails}"><a href="/logout"><button>Logout</button></a></li>
+				<li th:unless="${userDetails}"><a href="/login"><button>Login</button></a></li>
+			</ul>
+		</nav>
 	</header>
-	<h1 th:text="'Attori del film ' + ${movie.title}"></h1>
-	<div th:if="${movie.actors.isEmpty()}">Non ci sono attori per questo film</div>
-	<ul>
-		<li th:each="actor : ${movie.actors}">
-			<span th:text="${actor.name}+' '+${actor.surname}"></span>
-			<a th:href="@{'/admin/removeActorFromMovie/'+ ${actor.id}+'/'+${movie.id}}">Cancella</a>
-		</li>
-	</ul>
-	<div>
-		Attori che si possono aggiungere:
-		<ul>
-			<li th:each="actor : ${actorsToAdd}">
-				<span th:text="${actor.name}+' '+${actor.surname}"></span>
-				<a th:href="@{'/admin/addActorToMovie/'+ ${actor.id}+'/'+${movie.id}}">Aggiungi</a>
-			</li>
-		</ul>
+	
+	
+	
+	
+	<h1>Movie update</h1>
+	<div th:if="${movie}">
+		<div class="glass">
+			<div class="box1">
+				<h3 th:text="'Actors for the movie ' + ${movie.title}"></h3>
+				<div th:if="${movie.actors.isEmpty()}">There are no actors for this movie.</div>
+				<ul>
+					<li th:each="actor : ${movie.actors}">
+						<span th:text="${actor.name}+' '+${actor.surname} + ' - '"></span>
+						<a class="editdir" th:href="@{'/admin/removeActorFromMovie/'+ ${actor.id}+'/'+${movie.id}}">Remove</a>
+					</li>
+				</ul>
+			</div>
+			<div class="box2">
+				<h3>Actors that can be added:</h3>
+				<ul>
+					<li th:each="actor : ${actorsToAdd}">
+						<span th:text="${actor.name}+' '+${actor.surname}"></span>
+						<a class="editdir" th:href="@{'/admin/addActorToMovie/'+ ${actor.id}+'/'+${movie.id}}">Add</a>
+					</li>
+				</ul>
+			</div>
+			<div>
+				<a th:href="@{'/admin/formUpdateMovie/'+ ${movie.id}}"><button type="button">End</button></a>
+			</div>
+		</div>
 	</div>
-	<div>
-		<a th:href="@{'/admin/formUpdateMovie/'+ ${movie.id}}"><button type="button">Fine</button></a>
-	</div>
+	<div th:unless="${movie}">Doesn't exist.</div>
+	
+	
+	
+	
+	
+	
+	
+	<footer>
+		<div>
+			<p>copyright &copy; 2023 MovieTime. designed by <span>MADALIN ALEXANDRU AVADANEI</span></p>
+		</div>
+  	</footer>
 </body>
 </html>

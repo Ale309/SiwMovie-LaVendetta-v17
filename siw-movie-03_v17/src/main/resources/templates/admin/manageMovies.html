@@ -9,7 +9,9 @@
 </head>
 <body>
 	<header>
+		<a href="/admin/manageMovies">
 			<img src="/images/MovieTime.png" alt="Logo" width="180" class="logo">
+		</a>
 		<div>
 		
 		<nav th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
@@ -19,7 +21,7 @@
 				<li>
 					<a>Manage movies</a>
 					<ul class="dropdown-menu">
-						<li><a href="/admin/formNewMovie">Add a new film</a></li>
+						<li><a href="/admin/formNewMovie">Add a new movie</a></li>
 						<li><a href="/admin/manageMovies">Update movies</a></li>
 						<li><a href="/formSearchMovies">Find movie by year</a></li>
 					</ul>

@@ -196,3 +196,11 @@ h3,
 .box span{
 	color: black;
 }
+
+.editdir{
+	color: black;
+}
+
+.editdir:hover{
+	text-decoration: underline;
+}

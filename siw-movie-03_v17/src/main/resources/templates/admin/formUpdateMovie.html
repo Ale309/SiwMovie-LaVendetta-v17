@@ -20,7 +20,7 @@
 				<li>
 					<a>Manage movies</a>
 					<ul class="dropdown-menu">
-						<li><a href="/admin/formNewMovie">Add a new film</a></li>
+						<li><a href="/admin/formNewMovie">Add a new movie</a></li>
 						<li><a href="/admin/manageMovies">Update movies</a></li>
 						<li><a href="/formSearchMovies">Find movie by year</a></li>
 					</ul>
@@ -48,36 +48,39 @@
 						<div class="box-img">
 	            			<img th:src="@{'/image/' + ${image.id}}">
 						</div>
-						<a th:href="'/admin/deleteImage/' + ${movie.id} + '/' + ${image.id}">Rimuovi immagine</a>
+						<a class="editdir" th:href="'/admin/deleteImage/' + ${movie.id} + '/' + ${image.id}">Remove image</a>
 	        		</div>
 				</div>
-			</div>
-			<h2 th:text="${movie.title} + '(' + ${movie.year} + ')'"></h2>
-			
-			
-			<div th:if="${movie.director}">
-				<span>Director: </span><span th:text="${movie.director.name} + ' ' + ${movie.director.surname}">...</span>
-				<a th:href="@{'/admin/addDirector/' + ${movie.id}}">Edit director</a></span>
-			</div>
-			<div th:unless="${movie.director}">
-				<a th:href="@{'/admin/addDirector/' + ${movie.id}}">Add director</a>
 			</div>
 			<form th:action="@{'/admin/updateMovieImages/' + ${movie.id}}" method="POST" th:object="${movie}" enctype="multipart/form-data">
 				<div>
 					<label>Add images:</label> <span><input type="file" name="movieImage" multiple required /></span>
 				</div>
 				<div>
-					<span><button type="submit">Confirm</button></span>
+					<span><button type="submit">Add images</button></span>
 				</div>
 			</form>
+			
+			<h2 th:text="${movie.title} + '(' + ${movie.year} + ')'"></h2>
+			
+			<div th:if="${movie.director}">
+				<h3>Director: </h3><span th:text="${movie.director.name} + ' ' + ${movie.director.surname}">...</span>
+				<div>
+					<a class="editdir" th:href="@{'/admin/addDirector/' + ${movie.id}}"><button>Edit director</button></a></span>
+				</div>
+			</div>
+			<div th:unless="${movie.director}">
+				<a th:href="@{'/admin/addDirector/' + ${movie.id}}">Add director</a>
+			</div>
+			
 	
 			<div>
-				<span>Actors: </span>
+				<h3>Actors: </h3>
 				<div th:each="actor: ${movie.actors}">
 					<span th:text="${actor.name} + ' ' + ${actor.surname}">...</span>
 				</div>
 				<a th:href="@{'/admin/updateActors/' + ${movie.id}}">
-					<button type="button">Edit</button>
+					<button type="button">Edit actors</button>
 				</a>
 			</div>
 		</div>
