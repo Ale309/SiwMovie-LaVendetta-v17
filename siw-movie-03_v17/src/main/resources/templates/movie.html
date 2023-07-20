@@ -6,6 +6,8 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>MovieTime - Moviee</title>
 	<link rel="stylesheet" href="/css/movie.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 </head>
 <body>
 	<header>
@@ -50,18 +52,18 @@
 	<div th:if="${movie}">
 		<div class="glass">
 			<div class="images-container">
-				<div class="box">
-					<div th:each="image: ${movie.images}">
+				<div th:each="image: ${movie.images}">
+					<div class="box">
 						<div class="box-img">
 	            			<img th:src="@{'/image/' + ${image.id}}">
 						</div>
 	        		</div>
 				</div>
 			</div>
-			<h2 th:text="${movie.title} + '(' + ${movie.year} + ')'"></h2>
+			<h2 th:text="${movie.title} + ' (' + ${movie.year} + ')'"></h2>
 			
 			<div class="artist">
-            <span>Director: </span>
+            <span class="grosso">Director: </span>
             <div th:if="${movie.director}">
                 <span th:text="${movie.director.name} + ' ' + ${movie.director.surname}">...</span>
             </div>
@@ -69,7 +71,7 @@
                 None
             </div>
             <div>
-                <span>Actors: </span>
+                <span class="grosso">Actors: </span>
                 <div th:if="${movie.actors}">
                     <div th:each="actor: ${movie.actors}">
                         <span th:text="${actor.name} + ' ' + ${actor.surname}">...</span>
@@ -86,20 +88,25 @@
         <div th:if="${hasReviews}">
             <ul th:each="rev : ${reviews}">
                 <div>
-                    <span th:text="${rev.username}"></span> <span> Ha Scritto </span>
+                    <span class="grosso" th:text="${rev.username}"></span> <span> Ha Scritto </span>
                 </div>
                 <div>
-                    <span>Title: </span> <span th:text="${rev.title}"></span>
+                    <span class="grosso">Title: </span> <span th:text="${rev.title}"></span>
                 </div>
                 <div>
-                    <span>Description: </span> <span th:text="${rev.description}"></span>
+                    <span class="grosso">Description: </span> <span th:text="${rev.description}"></span>
                 </div>
                 <div class="bottom-label">
-                    <span>Rating: </span><span th:text="${rev.rating}"></span>
+                    <span class="grosso">Rating: </span>
+                    <span>
+				        <i class="fas fa-star star-filled" th:each="star: ${#numbers.sequence(1, rev.rating)}"></i>
+				        <i class="far fa-star star-empty" th:each="star: ${#numbers.sequence(1, 5 - rev.rating)}"></i>
+				    </span>
                     <button sec:authorize="hasAuthority('ADMIN')">
                         <a th:href="'/admin/deleteReview/' + ${movie.id} + '/' + ${rev.id}">Delete</a>
                     </button>
                 </div>
+                <span>----------------</span>
             </ul>
         </div>
         <div th:unless="${hasReviews}">
@@ -114,15 +121,15 @@
                         <span><input hidden th:value="${user}" th:field="${review.username}" /></span>
                     </div>
                     <div>
-                        <label>Ttile:</label>
+                        <label class="grosso">Ttile:</label>
                         <span><input type="text" th:field="${review.title}" /></span>
                     </div>
                     <div>
-                        <label>Description:</label>
+                        <label class="grosso">Description:</label>
                         <span><input type="text" th:field="${review.description}" /></span>
                     </div>
                     <div>
-                        <label>Rating:</label>
+                        <label class="grosso">Rating:</label>
                         <span><input type="number" min="1" max="5" th:field="${review.rating}" /></span>
                     </div>
                     <div>
